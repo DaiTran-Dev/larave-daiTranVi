@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Route;
 */
 //API articel
 Route::get('articels','ArticleController@getArticel');
+Route::get('articels/searchId/{articel}','ArticleController@searchArticelById');
+Route::get('articels/searchTitle/{articel}','ArticleController@searchArticelByTitle');
 Route::get('articels/{articel}','ArticleController@searchArticel');
 Route::post('articels','ArticleController@creatArticel');
 Route::put('articels/{articel}','ArticleController@updateArticel');

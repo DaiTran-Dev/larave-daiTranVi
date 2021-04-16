@@ -44,7 +44,7 @@ abstract class BaseRepository implements RepositoryInterface
     */
     public function get()
     {
-        return  new ArticelCollection($this->model->all());
+        return  $this->model->all();
     }
 
     /**
@@ -54,7 +54,7 @@ abstract class BaseRepository implements RepositoryInterface
     */
     public function getById($id)
     {
-        return new ArticelResource($this->model->find($id));
+        return $this->model->find($id);
     }
 
     /**
@@ -64,7 +64,7 @@ abstract class BaseRepository implements RepositoryInterface
     */
     public function create($attributes = [])
     {
-        return new ArticelResource($this->model->create($attributes));
+        return $this->model->create($attributes);
     }
 
     /**
@@ -78,7 +78,7 @@ abstract class BaseRepository implements RepositoryInterface
         $result = $this->model->find($id);
         if($result){
             if($result->update($attributes)){
-                return new ArticelResource($result);
+                return $result;
             }else{
                 return false;
             }

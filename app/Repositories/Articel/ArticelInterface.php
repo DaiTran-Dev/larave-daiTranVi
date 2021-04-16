@@ -9,4 +9,16 @@ interface ArticelInterface
     * @return mixed
     */
     public function getArticel();
+
+    /**
+    * Get record in table articel by id
+    * @return mixed
+    */
+    public function searchArticelById($id);
+
+    /**
+    * Get record in table articel by title
+    * @return mixed
+    */
+    public function searchArticelByTitle($title);
 }

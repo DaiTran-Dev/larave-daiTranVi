@@ -5,6 +5,8 @@ namespace App\Http\Requests;
 use App\Models\Articel;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use App\Rules\IdArticelRule;
+use App\Rules\DateArticelRule;
 
 class ArticelRequest extends FormRequest
 {
@@ -18,6 +20,14 @@ class ArticelRequest extends FormRequest
         return true;
     }
 
+    /**
+     * Prepare the data for validation.
+     *
+     * @return void
+     */
+    protected function prepareForValidation()
+    {
+    }
 
     /**
      * Get the validation rules that apply to the request.
@@ -36,8 +46,10 @@ class ArticelRequest extends FormRequest
             break;
             case 'PUT':
                 return [
+                    'id'=>[new IdArticelRule],
                     'title' => "required|max:255|unique:articels,title,".$this->id,
-                    'body' => 'required'
+                    'body' => 'required',
+                    'created_at' => "date|date_format:m/d/Y|after_or_equal:".date('m/d/Y')
                 ];
             break;
         }
@@ -55,6 +67,7 @@ class ArticelRequest extends FormRequest
             'title.unique'=>'A title unique',
             'title.max'=>'A title max 255',
             'body.required' => 'A body is required',
+            'created_at.after_or_equal'=>'Must after or equal today'
         ];
     }
 }

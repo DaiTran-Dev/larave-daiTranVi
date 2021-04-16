@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ArticelRequest;
+use App\Http\Resources\Articel\ArticelCollection;
 use App\Http\Resources\Articel\ArticelResource;
 use Illuminate\Http\Request;
 use App\Models\Articel;
@@ -26,17 +27,28 @@ class ArticleController extends Controller
     */
     public function getArticel()
     {
-        $result = $this->articelRepo->getArticel();
+        $result = new ArticelCollection($this->articelRepo->getArticel());
         return response($result,200);
     }
 
     /**
-    * Show a Articel
+    * Get a Articel by id
     * @return Articel Return a Articel
     */
-    public function searchArticel(ArticelRequest $articel)
+    public function searchArticelById($id)
     {
-        return $articel;
+        $result = new ArticelCollection($this->articelRepo->searchArticelById($id));
+        return response($result,200);
+    }
+
+     /**
+    * Get a Articel by name
+    * @return Articel Return a Articel
+    */
+    public function searchArticelByTitle($title)
+    {
+        $result = new ArticelCollection($this->articelRepo->searchArticelByTitle($title));
+        return response($result,200);
     }
 
     /**
@@ -46,8 +58,8 @@ class ArticleController extends Controller
     */
     public function creatArticel(ArticelRequest $request)
     {
-        $result = $this->articelRepo->create($request->all());
-        return response($result,200);
+        $result = $this->articelRepo->create($request->only('title','body'));
+        return response(new ArticelResource($result),200);
     }
 
     /**
@@ -60,7 +72,7 @@ class ArticleController extends Controller
     {
         $result = $this->articelRepo->update($id,$request->all());
         if($result){
-            return response($result,200);
+            return response(new ArticelResource($result),200);
         }
         return response(null,200);
     }
