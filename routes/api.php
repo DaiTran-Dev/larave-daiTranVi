@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
+//API articel
 Route::get('articels','ArticleController@getArticel');
 Route::get('articels/{articel}','ArticleController@searchArticel');
 Route::post('articels','ArticleController@creatArticel');
